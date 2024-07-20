@@ -33,7 +33,7 @@
     "devDependencies": {
         "@types/bun": "latest",
         "pkgroll": "^2.4.1",
-        "typescript": "^5.0.0"
+        "typescript": "^5.5.3"
     },
     "peerDependencies": {
         "elysia": "^1.1.3",
@@ -42,7 +42,7 @@
     "dependencies": {
         "@elysiajs/static": "^1.1.0",
         "@remix-run/node": "^2.10.3",
-        "elysia-connect-middleware": "^0.0.1"
+        "elysia-connect-middleware": "^0.0.2"
     },
     "license": "MIT",
     "files": [

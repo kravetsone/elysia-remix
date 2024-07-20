@@ -49,7 +49,7 @@ new Elysia()
 
 declare module "@remix-run/server-runtime" {
     interface AppLoadContext {
-        hotPostName?: 1;
+        hotPostName?: string;
     }
 }
 ```

@@ -1,4 +1,5 @@
 import { join } from "node:path";
+import staticPlugin from "@elysiajs/static";
 import { createRequestHandler } from "@remix-run/node";
 import { Elysia } from "elysia";
 import type { InlineConfig, ViteDevServer } from "vite";
@@ -35,14 +36,27 @@ export interface RemixOptions {
 	 * Configure `vite` server in development
 	 */
 	vite?: InlineConfig;
+
+	/**
+	 * Configure [static plugin](https://elysiajs.com/plugins/static) options in `production` mode
+	 *
+	 * @default
+	 * {
+	 *		assets: clientDirectory,
+	 *		prefix: "/",
+	 *		directive: "immutable",
+	 *		maxAge: 31556952000
+	 * }
+	 */
+	static?: Parameters<typeof staticPlugin>[0];
 }
 
 export async function remix(options?: RemixOptions) {
 	const cwd = process.env.REMIX_ROOT ?? process.cwd();
 	const mode = options?.mode ?? process.env.NODE_ENV ?? "development";
-	const serverBuildURL = join(
-		cwd,
-		options?.buildDirectory ?? "build",
+	const buildDirectory = join(cwd, options?.buildDirectory ?? "build");
+	const serverBuildPath = join(
+		buildDirectory,
 		"server",
 		options?.serverBuildFile ?? "index.js",
 	);
@@ -67,13 +81,28 @@ export async function remix(options?: RemixOptions) {
 		elysia.use(
 			(await import("elysia-connect-middleware")).connect(vite.middlewares),
 		);
+	} else {
+		const clientDirectory = join(buildDirectory, "client");
+
+		elysia.use(
+			staticPlugin({
+				assets: clientDirectory,
+				prefix: "/",
+				directive: "immutable",
+				maxAge: 31556952000,
+				alwaysStatic: false,
+				// elysia is so bugly https://github.com/elysiajs/elysia/issues/739
+				noCache: true,
+				...options?.static,
+			}),
+		);
 	}
 
 	elysia.all("*", async ({ request }) => {
 		const handler = createRequestHandler(
 			vite
 				? () => vite.ssrLoadModule("virtual:remix/server-build")
-				: () => import(serverBuildURL),
+				: () => import(serverBuildPath),
 			mode,
 		);
 

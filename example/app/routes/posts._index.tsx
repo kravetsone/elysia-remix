@@ -1,8 +1,9 @@
-import { json } from "@remix-run/node";
+import { type LoaderFunctionArgs, json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
-export const loader = async () => {
+export const loader = async ({ context }: LoaderFunctionArgs) => {
 	return json({
+		...context,
 		posts: [
 			{
 				slug: "my-first-post",
@@ -17,10 +18,12 @@ export const loader = async () => {
 };
 
 export default function Posts() {
-	const { posts } = useLoaderData<typeof loader>();
+	const { posts, hotPostName } = useLoaderData<typeof loader>();
+
 	return (
 		<main>
 			<h1>Posts</h1>
+			<p>🔥🔥 {hotPostName} 🔥🔥</p>
 			<ul>
 				{posts.map((post) => (
 					<li key={post.slug}>

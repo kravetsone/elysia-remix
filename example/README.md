@@ -1,36 +1,25 @@
-# Welcome to Remix + Vite!
+# Welcome to [Elysia](https://elysiajs.com) + [Remix](https://remix.run) + [Vite](https://vitejs.dev/)!
 
 📖 See the [Remix docs](https://remix.run/docs) and the [Remix Vite docs](https://remix.run/docs/en/main/future/vite) for details on supported features.
 
 ## Development
 
-Run the Vite dev server:
+Run the [Elysia](https://elysiajs.com) + [Vite](https://vitejs.dev/) dev server:
 
-```shellscript
-npm run dev
+```sh
+bun dev
 ```
 
-## Deployment
+## Production
 
 First, build your app for production:
 
 ```sh
-npm run build
+bun run build
 ```
 
-Then run the app in production mode:
+Then run the [Elysia](https://elysiajs.com) app in production mode (with `NODE_ENV=production`):
 
 ```sh
-npm start
+bun start
 ```
-
-Now you'll need to pick a host to deploy it to.
-
-### DIY
-
-If you're familiar with deploying Node applications, the built-in Remix app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-- `build/server`
-- `build/client`

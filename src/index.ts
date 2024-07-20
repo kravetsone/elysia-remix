@@ -1,8 +1,13 @@
 import { join } from "node:path";
 import staticPlugin from "@elysiajs/static";
-import { createRequestHandler } from "@remix-run/node";
+import { type AppLoadContext, createRequestHandler } from "@remix-run/node";
 import { Elysia } from "elysia";
+import type { Context } from "elysia/context";
 import type { InlineConfig, ViteDevServer } from "vite";
+
+export type GetLoadContext = (
+	context: Context,
+) => AppLoadContext | Promise<AppLoadContext>;
 
 export interface RemixOptions {
 	/**
@@ -49,6 +54,14 @@ export interface RemixOptions {
 	 * }
 	 */
 	static?: Parameters<typeof staticPlugin>[0];
+
+	/**
+	 * A function that returns the value to use as `context` in route `loader` and
+	 * `action` functions.
+	 *
+	 * You can use declaration merging for type it correctly https://www.typescriptlang.org/docs/handbook/declaration-merging.html
+	 */
+	getLoadContext?: GetLoadContext;
 }
 
 export async function remix(options?: RemixOptions) {
@@ -101,7 +114,7 @@ export async function remix(options?: RemixOptions) {
 		);
 	}
 
-	elysia.all("*", async ({ request }) => {
+	elysia.all("*", async (context) => {
 		const handler = createRequestHandler(
 			vite
 				? () => vite.ssrLoadModule("virtual:remix/server-build")
@@ -109,7 +122,9 @@ export async function remix(options?: RemixOptions) {
 			mode,
 		);
 
-		return handler(request);
+		const loadContext = await options?.getLoadContext?.(context);
+
+		return handler(context.request, loadContext);
 	});
 
 	return elysia;

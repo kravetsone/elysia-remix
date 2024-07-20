@@ -4,6 +4,16 @@
     "module": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "description": "Use Remix with Elysia with HMR support!",
+    "author": {
+        "name": "Kravets",
+        "url": "https://github.com/kravetsone"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/kravetsone/elysia-remix"
+    },
+    "homepage": "https://github.com/kravetsone/elysia-remix",
+    "readme": "https://github.com/kravetsone/elysia-remix",
     "keywords": [
         "elysia",
         "elysia-plugin",

@@ -33,7 +33,7 @@ export interface RemixOptions {
 	 */
 	serverBuildFile?: string;
 	/**
-	 * Configure `vite` server in development
+	 * Configure `vite` server in `development` mode
 	 */
 	vite?: InlineConfig;
 
@@ -61,7 +61,10 @@ export async function remix(options?: RemixOptions) {
 		options?.serverBuildFile ?? "index.js",
 	);
 
-	const elysia = new Elysia();
+	const elysia = new Elysia({
+		name: "elysia-remix",
+		seed: options,
+	});
 
 	let vite: ViteDevServer | undefined;
 
@@ -91,7 +94,7 @@ export async function remix(options?: RemixOptions) {
 				directive: "immutable",
 				maxAge: 31556952000,
 				alwaysStatic: false,
-				// elysia is so bugly https://github.com/elysiajs/elysia/issues/739
+				// elysia is so buggy https://github.com/elysiajs/elysia/issues/739
 				noCache: true,
 				...options?.static,
 			}),

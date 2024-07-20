@@ -44,6 +44,7 @@
         "@remix-run/node": "^2.10.3",
         "elysia-connect-middleware": "^0.0.1"
     },
+    "license": "MIT",
     "files": [
         "dist"
     ]

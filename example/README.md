@@ -23,3 +23,5 @@ Then run the [Elysia](https://elysiajs.com) app in production mode (with `NODE_E
 ```sh
 bun start
 ```
+
+Powered by [`elysia-remix`](https://github.com/kravetsone/elysia-remix)

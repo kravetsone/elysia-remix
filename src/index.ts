@@ -117,8 +117,8 @@ export async function remix(options?: RemixOptions) {
 	elysia.all("*", async (context) => {
 		const handler = createRequestHandler(
 			vite
-				? () => vite.ssrLoadModule("virtual:remix/server-build")
-				: () => import(serverBuildPath),
+				? await vite.ssrLoadModule("virtual:remix/server-build")
+				: await import(serverBuildPath),
 			mode,
 		);
 

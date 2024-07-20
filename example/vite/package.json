@@ -1,0 +1,30 @@
+{
+  "name": "example-vite",
+  "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "scripts": {
+    "build": "remix vite:build",
+    "dev": "bun --watch ./server/index.ts",
+    "format": "prettier --ignore-path .gitignore --ignore-unknown --cache --cache-location node_modules/.cache/prettiercache --write .",
+    "lint": "eslint --ignore-path .gitignore --no-error-on-unmatched-pattern --cache --cache-location node_modules/.cache/eslint --fix .",
+    "start": "NODE_ENV=production bun ./server/index.js"
+  },
+  "dependencies": {
+    "@remix-run/react": "^2.10.3",
+    "isbot": "^5.1.11",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@remix-run/dev": "^2.10.3",
+    "@remix-run/eslint-config": "^2.10.3",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
+    "typescript": "^5.4.5",
+    "vite": "^5.3.4",
+    "vite-tsconfig-paths": "^4.3.2"
+  }
+}

@@ -42,7 +42,7 @@
     "dependencies": {
         "@elysiajs/static": "^1.1.0",
         "@remix-run/node": "^2.10.3",
-        "elysia-connect-middleware": "^0.0.2"
+        "elysia-connect-middleware": "^0.0.3"
     },
     "license": "MIT",
     "files": [

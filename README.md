@@ -91,7 +91,3 @@ export default function Posts() {
     );
 }
 ```
-
-### TODO:
-
--   Fix bug in https://github.com/kravetsone/elysia-connect-middleware with file sending (with public folder serve by vite)

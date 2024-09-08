@@ -1,5 +1,4 @@
 import { join } from "node:path";
-import staticPlugin from "@elysiajs/static";
 import { type AppLoadContext, createRequestHandler } from "@remix-run/node";
 import { Elysia } from "elysia";
 import type { Context } from "elysia/context";
@@ -41,19 +40,6 @@ export interface RemixOptions {
 	 * Configure `vite` server in `development` mode
 	 */
 	vite?: InlineConfig;
-
-	/**
-	 * Configure [static plugin](https://elysiajs.com/plugins/static) options in `production` mode
-	 *
-	 * @default
-	 * {
-	 *		assets: clientDirectory,
-	 *		prefix: "/",
-	 *		directive: "immutable",
-	 *		maxAge: 31556952000
-	 * }
-	 */
-	static?: Parameters<typeof staticPlugin>[0];
 
 	/**
 	 * A function that returns the value to use as `context` in route `loader` and
@@ -99,19 +85,13 @@ export async function remix(options?: RemixOptions) {
 		);
 	} else {
 		const clientDirectory = join(buildDirectory, "client");
-
-		elysia.use(
-			staticPlugin({
-				assets: clientDirectory,
-				prefix: "/",
-				directive: "immutable",
-				maxAge: 31556952000,
-				alwaysStatic: false,
-				// elysia is so buggy https://github.com/elysiajs/elysia/issues/739
-				noCache: true,
-				...options?.static,
-			}),
-		);
+		const glob = new Bun.Glob(`${clientDirectory}/**`);
+		for (const path of glob.scanSync()) {
+			elysia.get(
+				path.substring(clientDirectory.length), 
+				() => new Response(Bun.file(path))
+			);
+		}
 	}
 
 	elysia.all("*", async function processRemixSSR(context) {

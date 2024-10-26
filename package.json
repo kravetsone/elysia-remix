@@ -41,7 +41,7 @@
     },
     "dependencies": {
         "@remix-run/node": "^2.10.3",
-        "elysia-connect-middleware": "^0.0.3"
+        "connect-to-web": "^0.0.3"
     },
     "license": "MIT",
     "files": [

@@ -40,9 +40,8 @@
         "vite": "^5.0.0"
     },
     "dependencies": {
-        "@elysiajs/static": "^1.1.0",
         "@remix-run/node": "^2.10.3",
-        "elysia-connect-middleware": "^0.0.3"
+        "connect-to-web": "^0.0.3"
     },
     "license": "MIT",
     "files": [

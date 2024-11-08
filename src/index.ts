@@ -87,7 +87,7 @@ export async function remix(options?: RemixOptions) {
             beforeHandle: ({ request }: InferContext<typeof elysia>) => {
                 return connectToWeb((req, res, next) => {
                     vite.middlewares(req, res, next);
-                })(request);
+                })(request.clone());
             },
         };
 	} else {

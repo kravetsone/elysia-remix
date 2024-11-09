@@ -1,5 +1,6 @@
 import { Elysia } from "elysia";
-import { remix } from "elysia-remix";
+import { remix } from "../../src";
+// import { remix } from "elysia-remix";
 
 const port = Number(process.env.PORT) || 3000;
 

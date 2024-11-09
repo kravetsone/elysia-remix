@@ -31,7 +31,9 @@
         "prepublishOnly": "bunx pkgroll"
     },
     "devDependencies": {
+        "@biomejs/biome": "^1.9.4",
         "@types/bun": "latest",
+        "elysia-connect-middleware": "^0.0.3",
         "pkgroll": "^2.4.1",
         "typescript": "^5.5.3"
     },

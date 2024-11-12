@@ -81,22 +81,23 @@ export async function remix(options?: RemixOptions) {
 	}
 
 	let hooks = {};
-	
+
 	if (vite) {
-    	const { connectToWeb } = await import("connect-to-web");
-        hooks = {
-            beforeHandle: ({ request }: InferContext<typeof elysia>) => {
-                return connectToWeb((req, res, next) => {
-                    vite.middlewares(req, res, next);
-                })(request.clone());
-            },
-        };
+		const { connectToWeb } = await import("connect-to-web");
+		hooks = {
+			beforeHandle: ({ request }: InferContext<typeof elysia>) => {
+				return connectToWeb((req, res, next) => {
+					vite.middlewares(req, res, next);
+				})(request.clone());
+			},
+		};
 	} else {
 		const clientDirectory = join(buildDirectory, "client");
 		const glob = new Bun.Glob(`${clientDirectory}/**`);
 		for (const path of glob.scanSync()) {
 			elysia.get(
-				joinPosix(path.substring(clientDirectory.length)),
+				// TODO: find more nice way
+				joinPosix(path.substring(clientDirectory.length)).replaceAll("\\", "/"),
 				() => new Response(Bun.file(path)),
 			);
 		}

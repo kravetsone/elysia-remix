@@ -1,53 +1,46 @@
 {
-  "name": "elysia-remix",
-  "version": "0.0.3",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "description": "Use Remix with Elysia with HMR support!",
-  "author": {
-    "name": "Kravets",
-    "url": "https://github.com/kravetsone"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kravetsone/elysia-remix"
-  },
-  "homepage": "https://github.com/kravetsone/elysia-remix",
-  "readme": "https://github.com/kravetsone/elysia-remix",
-  "keywords": [
-    "elysia",
-    "elysia-plugin",
-    "vite",
-    "remix"
-  ],
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    }
-  },
-  "type": "module",
-  "scripts": {
-    "prepublishOnly": "bun type && bunx pkgroll",
-    "type": "bunx tsc --noEmit"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
-    "@types/bun": "latest",
-    "elysia-connect-middleware": "^0.0.3",
-    "pkgroll": "^2.5.1",
-    "typescript": "^5.6.3"
-  },
-  "peerDependencies": {
-    "elysia": "^1.1.3",
-    "vite": "^5.0.0"
-  },
-  "dependencies": {
-    "@remix-run/node": "^2.14.0",
-    "connect-to-web": "^0.0.3"
-  },
-  "license": "MIT",
-  "files": [
-    "dist"
-  ]
+	"name": "elysia-remix",
+	"version": "0.0.4",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"description": "Use Remix with Elysia with HMR support!",
+	"author": {
+		"name": "Kravets",
+		"url": "https://github.com/kravetsone"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/kravetsone/elysia-remix"
+	},
+	"homepage": "https://github.com/kravetsone/elysia-remix",
+	"readme": "https://github.com/kravetsone/elysia-remix",
+	"keywords": ["elysia", "elysia-plugin", "vite", "remix"],
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		}
+	},
+	"type": "module",
+	"scripts": {
+		"prepublishOnly": "bun type && bunx pkgroll",
+		"type": "bunx tsc --noEmit"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.4",
+		"@types/bun": "latest",
+		"elysia-connect-middleware": "^0.0.3",
+		"pkgroll": "^2.5.1",
+		"typescript": "^5.6.3"
+	},
+	"peerDependencies": {
+		"elysia": "^1.1.3",
+		"vite": "^5.0.0"
+	},
+	"dependencies": {
+		"@remix-run/node": "^2.14.0",
+		"connect-to-web": "^0.0.3"
+	},
+	"license": "MIT",
+	"files": ["dist"]
 }

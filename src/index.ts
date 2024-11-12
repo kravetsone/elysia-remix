@@ -1,4 +1,5 @@
 import { join } from "node:path";
+import { join as joinPosix } from "node:path/posix";
 import { type AppLoadContext, createRequestHandler } from "@remix-run/node";
 import { Elysia, type InferContext } from "elysia";
 import type { Context } from "elysia/context";
@@ -78,9 +79,9 @@ export async function remix(options?: RemixOptions) {
 			});
 		});
 	}
-	
-	let hooks = {};
 
+	let hooks = {};
+	
 	if (vite) {
     	const { connectToWeb } = await import("connect-to-web");
         hooks = {
@@ -91,31 +92,31 @@ export async function remix(options?: RemixOptions) {
             },
         };
 	} else {
-        const clientDirectory = join(buildDirectory, "client");
-        const glob = new Bun.Glob(`${clientDirectory}/**`);
-        for (const path of glob.scanSync()) {
-            elysia.get(
-                path.substring(clientDirectory.length),
-                () => new Response(Bun.file(path)),
-            );
-        }
+		const clientDirectory = join(buildDirectory, "client");
+		const glob = new Bun.Glob(`${clientDirectory}/**`);
+		for (const path of glob.scanSync()) {
+			elysia.get(
+				joinPosix(path.substring(clientDirectory.length)),
+				() => new Response(Bun.file(path)),
+			);
+		}
 	}
 
 	elysia.all(
-	   "*", 
+		"*",
 		async function processRemixSSR(context) {
-    		const handler = createRequestHandler(
-    			vite
-    				? await vite.ssrLoadModule("virtual:remix/server-build")
-    				: await import(serverBuildPath),
-    			mode,
-    		);
-    
-    		const loadContext = await options?.getLoadContext?.(context);
-    
-    		return handler(context.request, loadContext);
+			const handler = createRequestHandler(
+				vite
+					? await vite.ssrLoadModule("virtual:remix/server-build")
+					: await import(serverBuildPath),
+				mode,
+			);
+
+			const loadContext = await options?.getLoadContext?.(context);
+
+			return handler(context.request, loadContext);
 		},
-		hooks
+		hooks,
 	);
 
 	return elysia;

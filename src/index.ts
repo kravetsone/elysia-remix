@@ -83,15 +83,14 @@ export async function remix(options?: RemixOptions) {
 	let hooks = {};
 	
 	if (vite) {
-		const { connectToWeb } = await import("connect-to-web");
-		hooks = {
-			beforeHandle: ({ request }: InferContext<typeof elysia>) => {
-				return connectToWeb((req, res, next) => {
-					vite.middlewares(req, res, next);
-				})(request);
-			},
-		};
-		// elysia.use((await import("elysia-connect-middleware")).connect(vite.middlewares))
+    	const { connectToWeb } = await import("connect-to-web");
+        hooks = {
+            beforeHandle: ({ request }: InferContext<typeof elysia>) => {
+                return connectToWeb((req, res, next) => {
+                    vite.middlewares(req, res, next);
+                })(request.clone());
+            },
+        };
 	} else {
 		const clientDirectory = join(buildDirectory, "client");
 		const glob = new Bun.Glob(`${clientDirectory}/**`);

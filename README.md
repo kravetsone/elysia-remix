@@ -1,17 +1,21 @@
 # Elysia React Router and Remix
 
-Use [Remix](https://remix.run/) or [React Router v7](https://reactrouter.com/home) with [Elysia](https://elysiajs.com/) with `HMR` support! Close a really long-standing elysia plugin request https://github.com/elysiajs/elysia/issues/12
+Use [React Router v7](https://reactrouter.com/home) or [Remix](https://remix.run/) with [Elysia](https://elysiajs.com/) with `HMR` support! Closes a long-standing elysia plugin request https://github.com/elysiajs/elysia/issues/12
 
-### Usage
+> [!IMPORTANT]
+>
+> [Migration to React Router v7 from Remix](https://reactrouter.com/upgrading/remix).
 
-In `development` mode it use [`vite`](https://vitejs.dev/guide/api-javascript.html) under the hood and in `production` serve build directory and perform SSR requests
+### Usage with React Router
+
+In `development` mode it uses [`vite`](https://vitejs.dev/guide/api-javascript.html) under the hood, and in `production` serves the build directory and performs SSR requests.
 
 ```ts
 import { Elysia } from "elysia";
-import { remix } from "elysia-remix";
+import { reactRouter } from "elysia-react-router";
 
 new Elysia()
-    .use(await remix())
+    .use(await reactRouter())
     .get("/some", "Hello, world!")
     .listen(3000, console.log);
 ```
@@ -19,45 +23,47 @@ new Elysia()
 ### Quick start
 
 ```bash
-bun create remix@latest --template kravetsone/elysia-remix/example
+bun create react-router@latest --template kravetsone/elysia-react-router/example
 ```
 
 ### Options
 
-| Key              | Type                                                            | Default                                 | Description                                                                                                         |
-| ---------------- | --------------------------------------------------------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| mode?            | "development" \| "production"                                   | process.env.NODE_ENV \|\| "development" | In `development` mode it starts `vite` and in `production` it just served static and perform SSR requests.          |
-| basename?        | string                                                          | "/"                                     | The base path for the Remix app. This should match the `basename` in your `vite` config.                            |
-| buildDirectory?  | string                                                          | "build"                                 | The directory where the Remix app is built. This should match the `buildDirectory` directory in your `vite` config. |
-| serverBuildFile? | string                                                          | "index.js"                              | The Remix server output filename. This should match the `serverBuildFile` filename in your `vite` config.           |
-| vite?            | InlineConfig                                                    |                                         | Configure `vite` server in `development` mode.                                                                      |
-| static?          | [StaticOptions](https://elysiajs.com/plugins/static)            |                                         | Configure [static plugin](https://elysiajs.com/plugins/static) options in `production` mode                         |
-| getLoadContext?  | (context: Context) => AppLoadContext \| Promise<AppLoadContext> |                                         | A function that returns the value to use as `context` in route `loader` and `action` functions.                     |
+| Key              | Type                                                            | Default                                 | Description                                                                                                           |
+| ---------------- | --------------------------------------------------------------- | --------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| mode?            | "development" \| "production"                                   | process.env.NODE_ENV \|\| "development" | In `development` mode it starts `vite`, and in `production` it just serves static and performs SSR requests.          |
+| basename?        | string                                                          | "/"                                     | The base path for the application. This should match the `basename` in your `vite` config.                            |
+| buildDirectory?  | string                                                          | "build"                                 | The directory where the application is built. This should match the `buildDirectory` directory in your `vite` config. |
+| serverBuildFile? | string                                                          | "index.js"                              | The server output filename. This should match the `serverBuildFile` filename in your `vite` config.                   |
+| vite?            | InlineConfig                                                    |                                         | Configure `vite` server in `development` mode.                                                                        |
+| static?          | [StaticOptions](https://elysiajs.com/plugins/static)            |                                         | Configure [static plugin](https://elysiajs.com/plugins/static) options in `production` mode                           |
+| getLoadContext?  | (context: Context) => AppLoadContext \| Promise<AppLoadContext> |                                         | A function that returns the value to use as `context` in route `loader` and `action` functions.                       |
 
 ### getLoadContext usage
 
-in Elysia:
+In Elysia:
+
+<!-- https://reactrouter.com/upgrading/remix#9-update-types-for-apploadcontext -->
 
 ```ts
 new Elysia()
     .use(
-        await remix({
+        await reactRouter({
             getLoadContext: () => ({ hotPostName: "some post name" }),
         })
     )
     .listen(port, console.log);
 
-declare module "@remix-run/server-runtime" {
+declare module "react-router" {
     interface AppLoadContext {
         hotPostName?: string;
     }
 }
 ```
 
-in Remix
+In React Router:
 
 ```tsx
-export const loader = async ({ context }: LoaderFunctionArgs) => {
+export const loader = async ({ context }: Route.LoaderArgs) => {
     return json({
         ...context,
         posts: [
@@ -92,21 +98,22 @@ export default function Posts() {
 }
 ```
 
-### Using with React Router
+### Using with Remix
 
-The `remix` function is deprecated and will be reworked in future versions. Please use `reactRouter` for better compatibility and features. [More info on remix vs react-router v7](https://remix.run/blog/incremental-path-to-react-19)
+The `remix` function is deprecated and will be reworked in future versions. Please use `reactRouter` for better compatibility and features. [More info on remix vs react-router v7]
+(https://remix.run/blog/incremental-path-to-react-19)
 
-> [!IMPORTANT]
-> This feature will be reworked in future versions, because [Remix wants to ship new reworked framework with new ideas and old `Remix` name.](https://remix.run/blog/incremental-path-to-react-19)
+The `remix` function has the same options and types as `reactRouter`. Example usage:
 
 ```ts
 import { Elysia } from "elysia";
-import { reactRouter } from "elysia-react-router";
+import { remix } from "elysia-remix";
 
 new Elysia()
-    .use(await reactRouter())
+    .use(await remix())
     .get("/some", "Hello, world!")
     .listen(3000, console.log);
 ```
 
-The options for `reactRouter` are similar to those for `remix`, with the same configuration keys and types.
+> [!IMPORTANT]
+> The Remix functionality will be reworked in future versions, as [Remix plans to release a new reworked version of the framework with new ideas under the old name `Remix`.](https://remix.run/blog/incremental-path-to-react-19)

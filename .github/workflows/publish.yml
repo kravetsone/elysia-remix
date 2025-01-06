@@ -39,6 +39,9 @@ jobs:
             - name: Rename to elysia-remix
               run: npm pkg set name=elysia-remix
 
+            - name: Change import to remix
+              run: bun scripts/change-import.ts
+
             - name: Publish package to NPM as elysia-remix
               run: bun publish --access public
               env:

@@ -63,8 +63,11 @@ declare module "react-router" {
 In React Router:
 
 ```tsx
+import { useLoaderData } from "react-router";
+import type { Route } from "./+types/posts._index";
+
 export const loader = async ({ context }: Route.LoaderArgs) => {
-    return json({
+    return {
         ...context,
         posts: [
             {
@@ -76,7 +79,7 @@ export const loader = async ({ context }: Route.LoaderArgs) => {
                 title: "A Mixtape I Made Just For You",
             },
         ],
-    });
+    };
 };
 
 export default function Posts() {
@@ -105,6 +108,12 @@ The `remix` function is deprecated and will be reworked in future versions. Plea
 
 The `remix` function has the same options and types as `reactRouter`. Example usage:
 
+#### Install
+
+```bash
+bun i elysia-remix@latest @remix-run/node@latest
+```
+
 ```ts
 import { Elysia } from "elysia";
 import { remix } from "elysia-remix";
@@ -117,3 +126,15 @@ new Elysia()
 
 > [!IMPORTANT]
 > The Remix functionality will be reworked in future versions, as [Remix plans to release a new reworked version of the framework with new ideas under the old name `Remix`.](https://remix.run/blog/incremental-path-to-react-19)
+
+### Re-exports
+
+```ts
+import { remix } from "elysia-remix";
+import { reactRouter } from "elysia-remix/react-router";
+```
+
+```ts
+import { reactRouter } from "elysia-react-router";
+import { remix } from "elysia-react-router/remix";
+```

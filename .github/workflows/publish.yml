@@ -36,6 +36,14 @@ jobs:
               env:
                   NPM_CONFIG_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+            - name: Rename to elysia-remix
+              run: npm pkg set name=elysia-remix
+
+            - name: Publish package to NPM as elysia-remix
+              run: bun publish --access public
+              env:
+                  NPM_CONFIG_TOKEN: ${{ secrets.NPM_TOKEN }}
+
             - name: GitHub Release
               uses: ncipollo/release-action@v1
               with:

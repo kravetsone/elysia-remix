@@ -1,4 +1,4 @@
-# Remix Elysia
+# Elysia React Router and Remix
 
 Use [Remix](https://remix.run/) or [React Router v7](https://reactrouter.com/home) with [Elysia](https://elysiajs.com/) with `HMR` support! Close a really long-standing elysia plugin request https://github.com/elysiajs/elysia/issues/12
 
@@ -94,7 +94,10 @@ export default function Posts() {
 
 ### Using with React Router
 
-The `remix` function is deprecated and will be removed in future versions. Please use `reactRouter` for better compatibility and features. [More info on remix vs react-router v7](https://remix.run/blog/incremental-path-to-react-19)
+The `remix` function is deprecated and will be reworked in future versions. Please use `reactRouter` for better compatibility and features. [More info on remix vs react-router v7](https://remix.run/blog/incremental-path-to-react-19)
+
+> [!IMPORTANT]
+> This feature will be reworked in future versions, because [Remix wants to ship new reworked framework with new ideas and old `Remix` name.](https://remix.run/blog/incremental-path-to-react-19)
 
 ```ts
 import { Elysia } from "elysia";

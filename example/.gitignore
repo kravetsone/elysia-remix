@@ -5,3 +5,4 @@ node_modules
 /public/build
 
 vite.config.ts.*.mjs
+.react-router/

@@ -39,7 +39,8 @@
 	},
 	"dependencies": {
 		"@remix-run/node": "^2.14.0",
-		"connect-to-web": "^0.0.3"
+		"connect-to-web": "^0.0.3",
+		"react-router": "^7.1.1"
 	},
 	"license": "MIT",
 	"files": ["dist"]

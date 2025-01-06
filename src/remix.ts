@@ -2,7 +2,7 @@ import { join } from "node:path";
 import { join as joinPosix } from "node:path/posix";
 import { createRequestHandler } from "@remix-run/node";
 import type { AppLoadContext } from "@remix-run/node";
-import { Elysia, type InferContext } from "elysia";
+import { Elysia, type AnyElysia, type InferContext } from "elysia";
 
 import type { ViteDevServer } from "vite";
 import type { PluginOptions } from "./types";
@@ -33,7 +33,7 @@ import type { PluginOptions } from "./types";
  */
 export async function remix(
 	options?: PluginOptions<AppLoadContext>,
-): Promise<Elysia> {
+): Promise<AnyElysia> {
 	const cwd = process.env.REMIX_ROOT ?? process.cwd();
 	const mode = options?.mode ?? process.env.NODE_ENV ?? "development";
 	const buildDirectory = join(cwd, options?.buildDirectory ?? "build");

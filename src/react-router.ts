@@ -1,7 +1,7 @@
 import { join } from "node:path";
 import { join as joinPosix } from "node:path/posix";
-import { createRequestHandler, type AppLoadContext } from "react-router";
-import { Elysia, type InferContext } from "elysia";
+import { Elysia, type AnyElysia, type InferContext } from "elysia";
+import { type AppLoadContext, createRequestHandler } from "react-router";
 
 import type { ViteDevServer } from "vite";
 import type { PluginOptions } from "./types";
@@ -27,7 +27,7 @@ import type { PluginOptions } from "./types";
  */
 export async function reactRouter(
   options?: PluginOptions<AppLoadContext>
-): Promise<Elysia> {
+): Promise<AnyElysia> {
   const cwd = process.env.REMIX_ROOT ?? process.cwd();
   const mode = options?.mode ?? process.env.NODE_ENV ?? "development";
   const buildDirectory = join(cwd, options?.buildDirectory ?? "build");

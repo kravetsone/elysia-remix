@@ -1,8 +1,8 @@
-import { type LoaderFunctionArgs, json } from "react-router";
 import { useLoaderData } from "react-router";
+import type { Route } from "./+types/posts._index";
 
-export const loader = async ({ context }: LoaderFunctionArgs) => {
-	return json({
+export const loader = async ({ context }: Route.LoaderArgs) => {
+	return {
 		...context,
 		posts: [
 			{
@@ -14,7 +14,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
 				title: "A Mixtape I Made Just For You",
 			},
 		],
-	});
+	};
 };
 
 export default function Posts() {
